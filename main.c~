@@ -1,0 +1,37 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/ipc.h> 
+int main()
+{
+	int i=0,k=0,pos=0,l=0;
+	char *arglist[50],input[100],str[10],tar[10]="./";
+	scanf("%[^\n]",input);
+	if(input[0]!='$')
+	{
+		printf("Wrong input\n");
+		return 0;
+	}
+	i=1;
+	while(1)
+	{
+		if(input[i]==' ' || input[i]=='\0')
+		{
+			str[k]='\0';
+			arglist[pos] = (char *)malloc(8*sizeof(char)); 
+			strcpy(arglist[pos],str);
+			pos++;	
+			k=0;
+			if(input[i]=='\0')
+				break;
+		}
+		else 
+		{
+			str[k++]=input[i];
+		}
+		i++;
+	}
+	arglist[pos] = NULL;
+	execvp(strcat(tar,arglist[0]),arglist);
+}
